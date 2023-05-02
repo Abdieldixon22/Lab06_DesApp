@@ -16,9 +16,9 @@
     $resultado = $sentencia->execute([$nombres, $apellidos, $dni, $salario]);
 
     if ($resultado === TRUE) {
-        header('Location: ..\index.html?mensaje=registrado');
+        header('Location: ..\index.php?mensaje=registrado');
     } else {
-        header('Location: ..\index.html?mensaje=error');
+        header('Location: ..\index.php?mensaje=error');
         exit();
     }
 ?>
