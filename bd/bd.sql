@@ -1,3 +1,4 @@
+-- Active: 1683063220276@@127.0.0.1@3306
 create database grupo;
 use grupo;
 create or replace table employees(

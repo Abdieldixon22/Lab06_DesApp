@@ -20,7 +20,7 @@
         <ul class="navbar-nav ml-auto">
           <form class="form-inline my-2 my-lg-0" id="fSearch">
             <input name="search" id="search" class="form-control mr-sm-2" type="search" placeholder="Id Empleado" aria-label="Search">
-            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="btn btn-success my-2 my-sm-0" type="submit" value="Buscar" />
           </form>
       </div>
     </nav>
@@ -31,7 +31,7 @@
           <div class="card">
             <div class="card-body">
               <!-- FORM TO ADD TASKS -->
-              <form id="emp-form">
+              <form id="emp-form" action="php/register.php" method="post">
                 <div class="form-group">
                     <input type="text" id="firstName" placeholder="Nombres" class="form-control">
                 </div>
@@ -45,9 +45,7 @@
                     <input type="number" id="salary" placeholder="Salario" class="form-control">
                 </div>
                 <input type="hidden" id="prodId">
-                <button type="submit" class="btn btn-primary btn-block text-center">
-                  Guardar Empleado
-                </button>
+                <input type="submit" class="btn btn-primary btn-block text-center" value="Guardar empleado"/>
               </form>
             </div>
           </div>
