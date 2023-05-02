@@ -30,19 +30,19 @@
         <div class="col-md-5">
           <div class="card">
             <div class="card-body">
-              <!-- FORM TO ADD TASKS -->
+              <!-- FORMULARIO PARA AÑADIR EMPLEADOS -->
               <form id="emp-form" action="php/register.php" method="post">
                 <div class="form-group">
-                    <input type="text" id="firstName" placeholder="Nombres" class="form-control">
+                    <input type="text" name="firstName" placeholder="Nombres" class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="text" id="lastName" placeholder="Apellidos" class="form-control">
+                    <input type="text" name="lastName" placeholder="Apellidos" class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="number" id="dni" placeholder="DNI" class="form-control">
+                    <input type="number" name="dni" placeholder="DNI" class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="number" id="salary" placeholder="Salario" class="form-control">
+                    <input type="number" name="salary" placeholder="Salario" class="form-control" min="0" step="0.01">
                 </div>
                 <input type="hidden" id="prodId">
                 <input type="submit" class="btn btn-primary btn-block text-center" value="Guardar empleado"/>
@@ -51,11 +51,11 @@
           </div>
         </div>
 
-        <!-- TABLE  -->
+        <!-- TABLA  -->
         <div class="col-md-7">
             <div class="card my-4" id="emp-result">
                 <div class="card-body">
-                  <!-- SEARCH -->
+                  <!-- BUSCAR EMPLEADO -->
                   <ul id="emp-ul-result"></ul>
                 </div>
             </div>
@@ -68,6 +68,27 @@
                 <td>DNI</td>
                 <td>Salario</td>
               </tr>
+              <?php
+                // Consultar todos los empleados
+                include_once 'php/conexion.php';
+                $sentencia = $bd -> query("select * from employees");
+                $empleados = $sentencia->fetchAll(PDO::FETCH_OBJ);
+
+                foreach($empleados as $emp) {
+              ?>
+                <!--ENLISTAR EMPLEADOS-->
+                <tr>
+                  <td><?php echo $emp->id?></td>
+                  <td><?php echo $emp->nombres ?></td>
+                  <td><?php echo $emp->apellidos ?></td>
+                  <td><?php echo $emp->dni ?></td>
+                  <td><?php echo $emp->salario ?></td>
+                  <td><a class="btn btn-success pt-2 pb-2 pl-3 pr-3" href="php/edit.php?codigo=<?php echo $emp->id; ?>">Editar</a></td>
+                  <td><a onclick="return confirm('Estas seguro de eliminar?');" class="btn btn-danger pt-2 pb-2 pl-3 pr-3" href="php/delete.php?codigo=<?php echo $emp->id; ?>">Eliminar</a></td>
+                </tr>
+              <?php
+                }
+              ?>
             </thead>
             <tbody id="employees"></tbody>
           </table>
