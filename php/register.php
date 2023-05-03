@@ -1,9 +1,4 @@
 <?php
-    // Comprobamos que los campos estén llenados
-    if (empty($_POST["firstName"]) || empty($_POST["lastName"]) || empty($_POST["dni"]) || empty($_POST["salary"])) {
-        header('Location: .\index.html?mensaje=falta');
-        exit();
-    }
 
     include_once 'conexion.php';
 
@@ -12,13 +7,27 @@
     $dni = $_POST['dni'];
     $salario = $_POST['salary'];
 
-    $sentencia = $bd->prepare("INSERT INTO employees(nombres,apellidos,dni,salario) VALUES (?,?,?,?);");
-    $resultado = $sentencia->execute([$nombres, $apellidos, $dni, $salario]);
+    if(strlen($dni) != 8) {
+        header('Location: ..\index.php?mensaje=dniInvalid');
+        exit();
+    }else if($salario >= 10000) {
+        header('Location: ..\index.php?mensaje=salaryInvalid');
+        exit();
+    }
 
-    if ($resultado === TRUE) {
-        header('Location: ..\index.php?mensaje=registrado');
-    } else {
-        header('Location: ..\index.php?mensaje=error');
+    $sentencia = $bd->prepare("INSERT INTO employees(nombres,apellidos,dni,salario) VALUES (?,?,?,?);");
+
+    try {
+        $resultado = $sentencia->execute([$nombres, $apellidos, $dni, $salario]);
+    
+        if ($resultado === TRUE) {
+            header('Location: ..\index.php?mensaje=registrado');
+        } else {
+            header('Location: ..\index.php?mensaje=error');
+            exit();
+        }
+    }catch(Exception $e) {
+        header('Location: ..\index.php?mensaje=dniRepeated');
         exit();
     }
 ?>

@@ -8,7 +8,6 @@
     <title>Proyecto Grupo</title>
 </head>
 <body>
-
     <!-- NAVIGATION  -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="#">Employee App</a>
@@ -33,20 +32,57 @@
               <!-- FORMULARIO PARA AÑADIR EMPLEADOS -->
               <form id="emp-form" action="php/register.php" method="post">
                 <div class="form-group">
-                    <input type="text" name="firstName" placeholder="Nombres" class="form-control">
+                    <input type="text" name="firstName" placeholder="Nombres" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="lastName" placeholder="Apellidos" class="form-control">
+                    <input type="text" name="lastName" placeholder="Apellidos" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <input type="number" name="dni" placeholder="DNI" class="form-control">
+                    <input type="number" name="dni" placeholder="DNI" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <input type="number" name="salary" placeholder="Salario" class="form-control" min="0" step="0.01">
+                    <input type="number" name="salary" placeholder="Salario" class="form-control" min="0" step="0.01" required>
                 </div>
                 <input type="hidden" id="prodId">
                 <input type="submit" class="btn btn-primary btn-block text-center" value="Guardar empleado"/>
               </form>
+              <?php 
+                if(isset($_GET['mensaje'])){ // Si existe un mensaje
+                  // Mensajes de error
+                  $mensaje = $_GET['mensaje'];
+                  if($mensaje == 'dniRepeated') {
+                    ?>
+                    <p class="text-center mt-2 bg-danger text-light p-3">DNI ya existente</p>
+                    <?php
+                  }else if($mensaje == 'dniInvalid') {
+                    ?>
+                    <p class="text-center mt-2 bg-danger text-light p-3">DNI inválido</p>
+                    <?php
+                  }else if($mensaje == 'salaryInvalid') {
+                    ?>
+                    <p class="text-center mt-2 bg-danger text-light p-3">Cantidad de salario inválida</p>
+                    <?php
+                  }else if($mensaje == 'error') {
+                    ?>
+                    <p class="text-center mt-2 bg-danger text-light p-3">Error sql</p>
+                    <?php
+
+                  // Mensajes exitosos
+                  }else if($mensaje == 'registrado') {
+                    ?>
+                    <p class="text-center mt-2 bg-success text-light p-3">Empleado registrado</p>
+                    <?php
+                  }else if($mensaje == 'editado') {
+                    ?>
+                    <p class="text-center mt-2 bg-success text-light p-3">Empleado editado</p>
+                    <?php
+                  }else if($mensaje == 'eliminado') {
+                    ?>
+                    <p class="text-center mt-2 bg-success text-light p-3">Empleado eliminado</p>
+                    <?php
+                  }
+                }
+              ?>
             </div>
           </div>
         </div>

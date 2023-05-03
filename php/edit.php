@@ -76,6 +76,7 @@
             </div>
           </div>
         </div>
-    <script src="script/onLoad.js"></script>
-  </body>
+      </div>
+    </div>
+</body>
 </html>
