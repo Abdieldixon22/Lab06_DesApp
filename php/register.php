@@ -22,8 +22,7 @@
         $resultado = $sentencia->execute([$nombres, $apellidos, $dni, $salario, $telefono]);
     
         if ($resultado === TRUE) {
-            $mensaje = "!Bienvenido(a) *" . $nombres . " " . $apellidos . "* acaba de ser ".
-                       "registrado dentro de *Employee App*¡";
+            include_once 'parametersSend/parametersRegister.php';
             include_once 'enviarMensaje.php';
             header('Location: ..\index.php?mensaje=registrado');
         } else {

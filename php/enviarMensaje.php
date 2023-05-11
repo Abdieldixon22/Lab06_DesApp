@@ -1,10 +1,10 @@
 <?php
     $token = "63d5c7a8cb0b49998ab3f3a7e2ccead6e241292452a040049e";
     $instance = "1101818596";
-    $url = 'https://api.green-api.com/waInstance'.$instance.'/SendMessage/'.$token;
+    $url = 'https://api.green-api.com/waInstance'.$instance.'/'.$tipoEnvio.'/'.$token;
     $data = [
         "chatId" => "51".$telefono."@c.us",
-        "message" => $mensaje
+        ...$data1
     ];
     $options = array(
         'http' => array(
