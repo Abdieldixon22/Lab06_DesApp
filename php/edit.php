@@ -42,6 +42,7 @@
                     $apellidos = $emp[0]->apellidos;
                     $dni = $emp[0]->dni;
                     $salario = $emp[0]->salario;
+                    $telefono = $emp[0]->telefono;
                     
                 ?>
                 <div class="input-group mb-3">
@@ -68,6 +69,11 @@
                     <span class="input-group-text col-md-4">Salario</span>
                     <input type="number" name="salary" placeholder="Salario" class="form-control" min="0" step="0.01"
                     value="<?php echo $salario ?>">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text col-md-4">Telefono</span>
+                    <input type="number" name="cellphone" placeholder="Telefono" class="form-control" min="900000000"
+                    value="<?php echo $telefono ?>">
                 </div>
                 <input type="hidden" id="prodId">
                 <input type="submit" class="btn btn-primary btn-block text-center" value="Editar empleado"/>

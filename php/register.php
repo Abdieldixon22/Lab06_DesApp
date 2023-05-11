@@ -6,6 +6,7 @@
     $apellidos = $_POST['lastName'];
     $dni = $_POST['dni'];
     $salario = $_POST['salary'];
+    $telefono = $_POST['cellphone'];
 
     if(strlen($dni) != 8) {
         header('Location: ..\index.php?mensaje=dniInvalid');
@@ -15,12 +16,15 @@
         exit();
     }
 
-    $sentencia = $bd->prepare("INSERT INTO employees(nombres,apellidos,dni,salario) VALUES (?,?,?,?);");
+    $sentencia = $bd->prepare("INSERT INTO employees(nombres,apellidos,dni,salario,telefono) VALUES (?,?,?,?,?);");
 
     try {
-        $resultado = $sentencia->execute([$nombres, $apellidos, $dni, $salario]);
+        $resultado = $sentencia->execute([$nombres, $apellidos, $dni, $salario, $telefono]);
     
         if ($resultado === TRUE) {
+            $mensaje = "!Bienvenido(a) *" . $nombres . " " . $apellidos . "* acaba de ser ".
+                       "registrado dentro de *Employee App*¡";
+            include_once 'enviarMensaje.php';
             header('Location: ..\index.php?mensaje=registrado');
         } else {
             header('Location: ..\index.php?mensaje=error');
