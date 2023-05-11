@@ -1,3 +1,4 @@
+<?php include_once 'php/conexion.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +11,14 @@
 <body>
     <!-- NAVIGATION  -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Employee App</a>
+      <a class="navbar-brand" href="index.php">Employee App</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <form class="form-inline my-2 my-lg-0" id="fSearch">
+          <form class="form-inline my-2 my-lg-0" method="get" action="index.php">
             <input name="search" id="search" class="form-control mr-sm-2" type="search" placeholder="Id Empleado" aria-label="Search">
             <input class="btn btn-success my-2 my-sm-0" type="submit" value="Buscar" />
           </form>
@@ -42,6 +43,9 @@
                 </div>
                 <div class="form-group">
                     <input type="number" name="salary" placeholder="Salario" class="form-control" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" name="cellphone" placeholder="Telefono" class="form-control" min="900000000" required>
                 </div>
                 <input type="hidden" id="prodId">
                 <input type="submit" class="btn btn-primary btn-block text-center" value="Guardar empleado"/>
@@ -89,12 +93,6 @@
 
         <!-- TABLA  -->
         <div class="col-md-7">
-            <div class="card my-4" id="emp-result">
-                <div class="card-body">
-                  <!-- BUSCAR EMPLEADO -->
-                  <ul id="emp-ul-result"></ul>
-                </div>
-            </div>
           <table class="table table-bordered table-sm">
             <thead>
               <tr>
@@ -103,11 +101,16 @@
                 <td>Apellidos</td>
                 <td>DNI</td>
                 <td>Salario</td>
+                <td>Telefono</td>
               </tr>
               <?php
-                // Consultar todos los empleados
-                include_once 'php/conexion.php';
-                $sentencia = $bd -> query("select * from employees");
+                if(isset($_GET['search'])){ // Si hay un mensaje de búsqueda se limita el select
+                  $idEmp = $_GET['search'];
+                  $sentencia = $bd -> query("SELECT * FROM employees WHERE id = " . $idEmp);                     
+                }else{ // Caso contrario se consulta todos los empleados
+                  $sentencia = $bd -> query("SELECT * FROM employees");
+                }
+
                 $empleados = $sentencia->fetchAll(PDO::FETCH_OBJ);
 
                 foreach($empleados as $emp) {
@@ -119,6 +122,7 @@
                   <td><?php echo $emp->apellidos ?></td>
                   <td><?php echo $emp->dni ?></td>
                   <td><?php echo $emp->salario ?></td>
+                  <td><?php echo $emp->telefono ?></td>
                   <td><a class="btn btn-success pt-2 pb-2 pl-3 pr-3" href="php/edit.php?codigo=<?php echo $emp->id; ?>">Editar</a></td>
                   <td><a onclick="return confirm('Estas seguro de eliminar?');" class="btn btn-danger pt-2 pb-2 pl-3 pr-3" href="php/delete.php?codigo=<?php echo $emp->id; ?>">Eliminar</a></td>
                 </tr>
@@ -131,6 +135,5 @@
         </div>
       </div>
     </div>
-    <script src="script/onLoad.js"></script>
   </body>
 </html>
